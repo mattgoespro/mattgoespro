@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  frontend:
+    image: mattgoespro/hoppingmode-web-frontend
+    depends_on:
+      - "api"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - portfolio-website
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  api:
+    image: mattgoespro/hoppingmode-web-api
+    ports:
+      - "8080:3000"
+    networks:
+      - portfolio-website
+
+networks:
+  portfolio-website: {}

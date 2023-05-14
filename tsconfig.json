@@ -1,0 +1,16 @@
+{
+  "include": ["lib"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "types": ["node"],
+    "declaration": true,
+    "outDir": "./bin",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  }
+}

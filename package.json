@@ -1,0 +1,30 @@
+{
+  "name": "mattgoespro",
+  "version": "1.0.27",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattgoespro/mattgoespro.git"
+  },
+  "bin": {
+    "mattgoespro": "./bin/index.js"
+  },
+  "main": "./bin/index.js",
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "scripts": {
+    "build": "npx tsc --build",
+    "deploy": "npm version patch && npm publish --access public"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^10.0.1",
+    "exec-sh": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.12",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
