@@ -63,7 +63,7 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
 export const hoppingmodeWebRunContainers = createCommand("run")
   .description("Start a hoppingmode-web Docker container.")
   .addOption(createOption("-i, --image <name>", "Image to run").choices(["api", "frontend"]))
-  .option("-rm, --remove", "Remove existing container")
+  .option("--rm, --remove", "Remove existing container")
   .action(async (args) => {
     const run = "docker run -d -p %s --name %s mattgoespro/hoppingmode-web-%s:latest";
     const remove = "(docker rm -f %s || true)";
