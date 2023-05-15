@@ -1,6 +1,7 @@
-import { createCommand } from "commander";
+import { Option, createCommand, createOption } from "commander";
 import { resolve } from "path";
 import execSh from "exec-sh";
+import { format } from "util";
 
 const compose = `docker-compose -f ${resolve(
   __dirname,
@@ -75,36 +76,45 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
  */
 export const hoppingmodeWebRunContainers = createCommand("run")
   .description("Start a hoppingmode-web Docker container.")
-  .option("-f, --frontend", "Frontend")
-  .option("-a, --api", "API")
+  .addOption(createOption("-i, --image <name>", "Image to run").choices(["api", "frontend"]))
+  .option("-rm, --remove", "Remove existing container")
   .action(async (args) => {
-    const frontendRun =
-      "docker run -d -p 80:4000 --name api mattgoespro/hoppingmode-web-frontend:latest";
-    const apiRun = "docker run -d -p 8080:3000 --name api mattgoespro/hoppingmode-web-api:latest";
+    const run = "docker run -d -p %s --name %s mattgoespro/hoppingmode-web-%s:latest";
+    const remove = "(docker rm -f %s || true)";
 
     if (Object.keys(args).length === 0) {
-      console.log("options: [-f | --frontend] [-a | --api]");
+      console.log("Options: [-f | --frontend] [-a | --api]");
       return;
     }
 
-    const errors: ShellError[] = [];
+    let runImage = format(run, "%s", args.image, args.image);
 
-    if (args.frontend) {
+    if (args.remove) {
+      runImage = `${format(remove, args.image)} && ${runImage}`;
+    }
+
+    let error = false;
+
+    if (args.image === "frontend") {
       console.log("Starting frontend container...".green);
-      try {
-        await execSh.promise(frontendRun);
-      } catch (err) {}
-    }
 
-    if (args.api) {
+      try {
+        await execSh.promise(format(runImage, "80:4000"));
+      } catch (err) {
+        error = true;
+      }
+    } else if (args.image === "api") {
       console.log("Starting api container...".green);
+
       try {
-        await execSh.promise(apiRun);
-      } catch (err) {}
+        await execSh.promise(format(runImage, "8080:3000"));
+      } catch (err) {
+        error = true;
+      }
     }
 
-    if (errors.length > 0) {
-      console.log("Errors were encountered while starting the Docker containers.");
+    if (error) {
+      console.log(`\nErrors were encountered while starting '${args.image}'`.red);
       console.log("\nFAILED".red);
       return;
     }
