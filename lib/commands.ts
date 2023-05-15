@@ -83,7 +83,7 @@ export const hoppingmodeWebRunContainers = createCommand("run")
     const remove = "(docker rm -f %s || true)";
 
     if (Object.keys(args).length === 0) {
-      console.log("Options: [-f | --frontend] [-a | --api]");
+      console.log("error: option '-i, --image <name>' argument missing".red);
       return;
     }
 
