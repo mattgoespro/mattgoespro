@@ -3,7 +3,8 @@ import colors from "colors";
 import {
   hoppingmodeWebComposeRemove,
   hoppingmodeWebComposeStart,
-  hoppingmodeWebPullImages
+  hoppingmodeWebPullImages,
+  hoppingmodeWebRunContainers
 } from "./commands";
 
 /**
@@ -19,6 +20,7 @@ function configureCli() {
         .alias("hw")
         .description("Manage hoppingmode-web Docker stack.")
         .addCommand(hoppingmodeWebPullImages)
+        .addCommand(hoppingmodeWebRunContainers)
         .addCommand(hoppingmodeWebComposeStart)
         .addCommand(hoppingmodeWebComposeRemove)
     );
