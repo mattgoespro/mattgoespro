@@ -50,7 +50,6 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
     }
 
     if (error) {
-      console.log("\nErrors were encountered while pulling images".red);
       console.log("\nFAILED".red);
       return;
     }
@@ -101,7 +100,6 @@ export const hoppingmodeWebRunContainers = createCommand("run")
     }
 
     if (error) {
-      console.log(`\nErrors were encountered while starting '${args.image}'`.red);
       console.log("\nFAILED".red);
       return;
     }
@@ -115,7 +113,6 @@ export const hoppingmodeWebComposeStart = createCommand("start")
     try {
       await execSh.promise(`${compose} -p hoppingmode-web up -d`);
     } catch (err) {
-      console.log("\nFailed to start hoppingmode-web.".red);
       console.log("\nFAILED".red);
     }
   });
@@ -126,7 +123,6 @@ export const hoppingmodeWebComposeRemove = createCommand("remove")
     try {
       await execSh.promise(`${compose} -p hoppingmode-web down`);
     } catch (err) {
-      console.log("\nFailed to remove hoppingmode-web.".red);
       console.log("\nFAILED".red);
     }
   });
