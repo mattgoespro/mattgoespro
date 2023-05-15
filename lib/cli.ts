@@ -12,6 +12,9 @@ import {
  */
 colors.enable();
 
+/**
+ * Create CLI and add commands.
+ */
 function configureCli() {
   return program
     .name("mattgoespro")

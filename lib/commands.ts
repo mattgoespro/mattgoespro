@@ -26,8 +26,9 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
     const apiPull = "docker pull mattgoespro/hoppingmode-web-api:latest";
     const errors: ShellError[] = [];
 
+    // no args given, pull all images
     if (Object.keys(args).length === 0) {
-      console.log("Pulling images...".green);
+      console.log("Pulling Docker images...".green);
       const res1 = await execCmd(frontendPull);
       const res2 = await execCmd(apiPull);
 
@@ -39,8 +40,9 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
         errors.push(res2);
       }
     } else {
+      // pull frontend
       if (args.frontend) {
-        console.log(`Pulling frontend image...`.green);
+        console.log(`Pulling mattgoespro/hoppingmode-web-frontend...`.green);
         const res = await execCmd(frontendPull);
 
         if (res != null) {
@@ -48,8 +50,9 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
         }
       }
 
+      // pull api
       if (args.api) {
-        console.log("Pulling api image...".green);
+        console.log("Pulling mattgoespro/hoppingmode-web-api...".green);
         const res = await execCmd(apiPull);
 
         if (res != null) {
@@ -67,6 +70,9 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
     console.log("\nSUCCESS".green);
   });
 
+/**
+ * Run hoppingmode-web Docker containers.
+ */
 export const hoppingmodeWebRunContainers = createCommand("run")
   .description("Start a hoppingmode-web Docker container.")
   .option("-f, --frontend", "Frontend")
