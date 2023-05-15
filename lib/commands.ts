@@ -1,4 +1,4 @@
-import { Option, createCommand, createOption } from "commander";
+import { createCommand, createOption } from "commander";
 import { resolve } from "path";
 import execSh from "exec-sh";
 import { format } from "util";
@@ -25,45 +25,32 @@ export const hoppingmodeWebPullImages = createCommand("pull-images")
   .action(async (args) => {
     const frontendPull = "docker pull mattgoespro/hoppingmode-web-frontend:latest";
     const apiPull = "docker pull mattgoespro/hoppingmode-web-api:latest";
-    const errors: ShellError[] = [];
+    let error = false;
 
     // no args given, pull all images
     if (Object.keys(args).length === 0) {
       console.log("Pulling Docker images...".green);
       const res1 = await execCmd(frontendPull);
       const res2 = await execCmd(apiPull);
-
-      if (res1 != null) {
-        errors.push(res1);
-      }
-
-      if (res2 != null) {
-        errors.push(res2);
-      }
+      error = res1 != null || res2 != null;
     } else {
       // pull frontend
       if (args.frontend) {
         console.log(`Pulling mattgoespro/hoppingmode-web-frontend...`.green);
         const res = await execCmd(frontendPull);
-
-        if (res != null) {
-          errors.push(res);
-        }
+        error = res != null;
       }
 
       // pull api
       if (args.api) {
         console.log("Pulling mattgoespro/hoppingmode-web-api...".green);
         const res = await execCmd(apiPull);
-
-        if (res != null) {
-          errors.push(res);
-        }
+        error = res != null;
       }
     }
 
-    if (errors.length > 0) {
-      console.log("Errors were encountered while pulling the Docker images.".red);
+    if (error) {
+      console.log("\nErrors were encountered while pulling images".red);
       console.log("\nFAILED".red);
       return;
     }
@@ -128,7 +115,7 @@ export const hoppingmodeWebComposeStart = createCommand("start")
     try {
       await execSh.promise(`${compose} -p hoppingmode-web up -d`);
     } catch (err) {
-      console.log("Failed to start hoppingmode-web.");
+      console.log("\nFailed to start hoppingmode-web.".red);
       console.log("\nFAILED".red);
     }
   });
@@ -139,7 +126,7 @@ export const hoppingmodeWebComposeRemove = createCommand("remove")
     try {
       await execSh.promise(`${compose} -p hoppingmode-web down`);
     } catch (err) {
-      console.log("Failed to remove hoppingmode-web.");
+      console.log("\nFailed to remove hoppingmode-web.".red);
       console.log("\nFAILED".red);
     }
   });
