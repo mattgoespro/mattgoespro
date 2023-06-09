@@ -3,7 +3,6 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "ms-azuretools.vscode-docker",
-    "christian-kohler.npm-intellisense",
-    "eamodio.gitlens"
+    "christian-kohler.npm-intellisense"
   ]
 }
