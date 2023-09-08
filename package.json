@@ -16,7 +16,7 @@
   "scripts": {
     "build": "npx tsc --build",
     "lint": "eslint lib --ext .ts .",
-    "deploy": "npm version patch && npm publish --access restricted",
+    "deploy": "npm version patch && npm publish --access public",
     "prepare": "husky install"
   },
   "dependencies": {
