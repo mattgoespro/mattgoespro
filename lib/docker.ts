@@ -13,11 +13,15 @@ export function pullImage(image: string) {
   return new Promise((resolve, reject) => {
     docker.pull(image, (err: Error, stream: NodeJS.ReadableStream) => {
       if (err) {
+        console.log(err);
+        console.log(`[ERROR] Unable to pull image '${image}'.`);
         reject(err);
       }
 
       docker.modem.followProgress(stream, (err, output) => {
         if (err) {
+          console.log(err);
+          console.log("[ERROR] Unable to track image pull progress.");
           reject(err);
         }
 
@@ -53,11 +57,15 @@ export function startContainer(name: string, image: string, hostPort: number) {
 
         container.attach({ stream: true, stdout: true, stderr: true }, function (err, stream) {
           stream.pipe(process.stdout);
+          console.log(err);
+          console.log("[ERROR] Container attach failed.");
         });
 
         container.start((err, data) => {
           if (err) {
             reject(err);
+            console.log(err);
+            console.log("[ERROR] Container start failed.");
           }
 
           resolve(data);
@@ -71,6 +79,8 @@ export function composeUp() {
   return new Promise((resolve, reject) => {
     compose.up((err, output) => {
       if (err) {
+        console.log(err);
+        console.log("[ERROR] Failed to start compose stack.");
         reject(err);
       }
 

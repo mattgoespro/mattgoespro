@@ -15,6 +15,8 @@
     "mskelton.npm-outdated",
     "fabiospampinato.vscode-open-in-npm",
     "richie5um2.vscode-sort-json",
-    "pkief.material-icon-theme"
+    "pkief.material-icon-theme",
+    "wix.vscode-import-cost",
+    "yoavbls.pretty-ts-errors"
   ]
 }

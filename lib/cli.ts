@@ -21,12 +21,13 @@ function configureCli() {
     .addCommand(
       createCommand("hoppingmode-web")
         .alias("hw")
-        .description("Manage hoppingmode-web Docker stack.")
+        .description("Manage the hoppingmode-web web stack.")
         .addCommand(hoppingmodeWebPullImages)
         .addCommand(hoppingmodeWebRunContainers)
         .addCommand(hoppingmodeWebComposeStart)
         .addCommand(hoppingmodeWebComposeRemove)
-    );
+    )
+    .helpOption("-h, --help");
 }
 
 export default configureCli;

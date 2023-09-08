@@ -14,7 +14,7 @@
     "node": ">=14.15.0"
   },
   "scripts": {
-    "build": "npx tsc --build",
+    "build": "rm -rf bin && npx tsc --build",
     "lint": "eslint lib --ext .ts .",
     "deploy": "npm run build && npm version patch && npm publish --access public",
     "prepare": "husky install"
